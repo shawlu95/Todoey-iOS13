@@ -106,7 +106,6 @@ extension CategoryViewController: SwipeTableViewCellDelegate {
                     try self.realm.write {
                         self.realm.delete(categoryForDeletion)
                     }
-                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 } catch {
                     print("Error deleting category, \(error)")
                 }
@@ -115,5 +114,11 @@ extension CategoryViewController: SwipeTableViewCellDelegate {
         action.image = UIImage(named: "delete-icon")
         return [action]
     }
-
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        options.transitionStyle = .drag
+        return options
+    }
 }
