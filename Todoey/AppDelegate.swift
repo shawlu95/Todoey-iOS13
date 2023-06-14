@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,9 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // where NSHomeDirectory() is the path to the app's sandbox directory
-        // go to .../APP_ID/Library/Preferences to find the userdefault object
-        print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
+
+        do {
+            let realm = try Realm()
+        } catch {
+            print("Error initialising new realm, \(error)")
+        }
+        
         return true
     }
 
