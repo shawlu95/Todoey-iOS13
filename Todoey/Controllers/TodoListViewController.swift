@@ -26,8 +26,6 @@ class TodoListViewController: UITableViewController {
         
         // replace APP_ID/Documents with APP_ID/Library/Application Support, find DataModel.sqlite
         print("data stored at \(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))")
-        
-        loadItems()
     }
     
     //MARK: - TableView Datasource Methods
