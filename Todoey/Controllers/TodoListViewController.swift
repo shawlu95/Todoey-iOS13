@@ -13,14 +13,13 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Item.plist stored at \(dataFilePath!)")
+        // replace APP_ID/Documents with APP_ID/Library/Application Support, find DataModel.sqlite
+        print("data stored at \(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))")
         
 //        loadItems()
     }
@@ -77,10 +76,9 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    //Mark: - Model Manipulation Methods
+    //MARK: - Model Manipulation Methods
     
     func saveItems() {
-        let encoder = PropertyListEncoder()
         do {
             try context.save()
         } catch {
