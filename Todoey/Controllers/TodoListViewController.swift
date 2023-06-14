@@ -11,8 +11,6 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-
-    let defaults = UserDefaults.standard
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
@@ -21,15 +19,7 @@ class TodoListViewController: UITableViewController {
         
         print("Item.plist stored at \(dataFilePath!)")
         
-        let item1 = Item(title: "Find Mike")
-        let item2 = Item(title: "Buy Eggos")
-        let item3 = Item(title: "Destroy Demogorgon")
-        itemArray.append(item1)
-        itemArray.append(item2)
-        itemArray.append(item3)
-//        if let items = defaults.object(forKey: "TodoListArray") as? [Item] {
-//            itemArray = items
-//        }
+        loadItems()
     }
     
     //MARK: - TableView Datasource Methods
@@ -93,5 +83,16 @@ class TodoListViewController: UITableViewController {
             print("Error encoding item array, \(error)")
         }
         self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error encoding item array, \(error)")
+            }
+        }
     }
 }
